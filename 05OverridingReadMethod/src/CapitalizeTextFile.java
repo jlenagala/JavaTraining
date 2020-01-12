@@ -6,7 +6,7 @@ public class CapitalizeTextFile {
 	public static void main(String[] args) throws IOException {
 
 		FileReader f = new FileReader("D:\\JavaTraining\\05OverridingReadMethod\\TextFile\\ReaderText.txt");
-		toOverride b = new toOverride(f);
+		ToOverride b = new ToOverride(f);
 
 		int i;
 		while ((i = b.read()) != -1) {
