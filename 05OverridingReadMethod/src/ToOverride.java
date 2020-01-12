@@ -2,9 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-public class toOverride extends BufferedReader {
+public class ToOverride extends BufferedReader {
 
-	public toOverride(Reader in) {
+	public ToOverride(Reader in) {
 		super(in);
 		// TODO Auto-generated constructor stub
 	}
