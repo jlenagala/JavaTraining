@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+package showReleventDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+/**
+ * @author Dell
+ *
+ */
+public class ShowDateTime {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		LocalDateTime t= LocalDateTime.now(ZoneId.of("GMT"));
+		LocalDateTime t= LocalDateTime.now(ZoneId.of("PST"));
+		System.out.println(t);
+
+	}
+
+}

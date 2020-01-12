@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+package showReleventDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+/**
+ * @author Dell
+ *
+ */
+public class ShowDateTime {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		LocalDateTime t= LocalDateTime.now();
+		System.out.println(t);
+
+	}
+
+}
