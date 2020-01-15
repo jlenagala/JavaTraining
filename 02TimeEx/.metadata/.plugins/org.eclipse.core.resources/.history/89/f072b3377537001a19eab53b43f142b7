@@ -1,0 +1,67 @@
+/**
+ * 
+ */
+package showReleventDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.TimeZone;
+
+/**
+ * @author Dell
+ *
+ */
+public class ShowDateTime {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+//		LocalDateTime t= LocalDateTime.now(ZoneId.of("GMT"));
+//		LocalDateTime t1= LocalDateTime.now(ZoneId.of("America/Los_Angeles"));
+		
+		int year,month,dayOfMonth,hour,min,sec;
+		Scanner input = new Scanner(System.in);
+		System.out.print("Please enter a year : ");
+		year=input.nextInt();
+		System.out.print("Please enter a month : ");
+		month=input.nextInt();
+		System.out.print("Please enter a Day : ");
+		dayOfMonth=input.nextInt();
+		System.out.print("Please enter a Hour : ");
+		hour=input.nextInt();
+		System.out.print("Please enter a Min : ");
+		min=input.nextInt();
+		System.out.print("Please enter a Sec : ");
+		sec=input.nextInt();
+		LocalDateTime localDateTime=LocalDateTime.of(year,month,dayOfMonth,hour,min,sec);
+		
+		DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		
+		Date date = utcFormat.parse(localDateTime);
+
+		DateFormat pstFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		pstFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+
+		System.out.println(pstFormat.format(localDateTime));
+		
+		
+		
+		
+		System.out.println("");
+		
+		ZonedDateTime zonedDateTime=ZonedDateTime.of(localDateTime,ZoneId.of("UTC"));
+		System.out.println("UTC Time :- "+zonedDateTime);
+
+		System.out.println("");
+		ZonedDateTime zonedDateTimePst=ZonedDateTime.of(localDateTime,ZoneId.of("America/Los_Angeles"));
+		System.out.println("PST time :- "+zonedDateTimePst+"\n");
+		
+	}
+
+}

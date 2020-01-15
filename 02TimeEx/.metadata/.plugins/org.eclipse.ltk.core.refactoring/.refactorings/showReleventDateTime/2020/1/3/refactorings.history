@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;input&apos; in &apos;showReleventDateTime.ShowDateTime.main(...)&apos; to &apos;inputVar&apos;&#x0D;&#x0A;- Original project: &apos;showReleventDateTime&apos;&#x0D;&#x0A;- Original element: &apos;showReleventDateTime.ShowDateTime.main(String[]).input&apos;&#x0D;&#x0A;- Renamed element: &apos;input&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;input&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;showReleventDateTime{ShowDateTime.java[ShowDateTime~main~\[QString;@input!485!523!493!497!QScanner;!0!false" name="inputVar" references="true" stamp="1579084779838" version="1.0"/>
+</session>
