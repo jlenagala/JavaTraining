@@ -1,7 +1,6 @@
-
+package c;
 import b.Course;
-
-class Student{
+public class Student{
 	public static void main(String args[]){
 		
 		Course.print();

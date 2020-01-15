@@ -1,6 +1,6 @@
-
+package a;
 import c.Student;
-class Application{
+public class Application{
 	public static void main(String args[]){
 		Student student = new Student();
 		student.print();
