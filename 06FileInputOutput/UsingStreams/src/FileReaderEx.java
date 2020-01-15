@@ -1,23 +1,25 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
 
 public class FileReaderEx {
 
 	public static void main(String[] args) throws IOException {
-		
-		FileReader f = new FileReader("D:\\JavaTraining\\06FileInputOutput\\UsingStreams\\TextFile\\ReaderText.txt");
-		BufferedReader b = new BufferedReader(f);
 
-		int i;
-		while ((i = b.read()) != -1) {
-			// System.out.println("nn"+i);
-			char printChar = (char) i;
-			System.out.print(printChar);
+		FileInputStream f = new FileInputStream(
+				"D:\\JavaTraining\\06FileInputOutput\\UsingStreams\\TextFile\\ReaderText.txt");
+		try {
+			int i;
+			while ((i = f.read()) != -1) {
+				// System.out.println("nn"+i);
+				char printChar = (char) i;
+				System.out.print(printChar);
 
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
 		}
-		b.close();
+
 	}
 
 }

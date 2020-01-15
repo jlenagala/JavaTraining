@@ -1,14 +1,13 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileWriterEx {
 
 	public static void main(String[] args) throws IOException {
-		FileWriter f = new FileWriter("D:\\JavaTraining\\06File\\TextFile\\WriterText.txt");
-		BufferedWriter b = new BufferedWriter(f);
-
-		b.write("welcome to java- writer");
+		FileOutputStream b = new FileOutputStream("D:\\JavaTraining\\06FileInputOutput\\UsingStreams\\TextFile\\WriterText.txt");
+		String str="welcome to java- writer";
+		b.write(str.getBytes());
+		System.out.println("File is printed");
 		b.close();
 	}
 
