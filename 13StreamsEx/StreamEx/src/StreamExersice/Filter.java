@@ -22,12 +22,6 @@ public class Filter {
 
 		System.out.println(filterd);
 
-		/*
-		 * Map<String, Integer>filterd = students.entrySet() .stream()
-		 * .filter((s1->(s1.getValue()>60)))
-		 * 
-		 * System.out.println(filterd);
-		 */
 	}
 
 }
