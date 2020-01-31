@@ -1,5 +1,4 @@
 package com.janani.training.salesmanager.model;
-
 public class Employee {
 
 	String employeeName;
