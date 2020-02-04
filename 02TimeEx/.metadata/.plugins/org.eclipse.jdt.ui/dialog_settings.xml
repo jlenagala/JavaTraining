@@ -17,7 +17,13 @@
 		<item key="create_unimplemented" value="false"/>
 	</section>
 	<section name="completion_proposal_size">
+		<item key="size.x" value="390"/>
+		<item key="size.y" value="244"/>
 	</section>
 	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
 	</section>
 </section>

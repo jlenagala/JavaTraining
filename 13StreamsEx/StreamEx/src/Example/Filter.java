@@ -13,7 +13,9 @@ public class Filter {
 		students.add(new Student("Anil", 98));
 		students.add(new Student("Geetha", 61));
 
-		List<Student> filterd = students.stream().filter(student -> student.getName().contains("i"))
+		List<Student> filterd = students
+				.stream()
+				.filter(student -> student.getName().contains("i"))
 				.collect(Collectors.toList());
 
 		System.out.println(filterd);
