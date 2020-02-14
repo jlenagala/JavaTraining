@@ -1,0 +1,12 @@
+ 617  clear
+  618  docker ps
+  619  docker images
+  620  cd ..
+  621  cd employee
+  622  vim Dockerfile
+  623  vim Dockerfile
+  624  docker build -t employee-service .
+  625  docker run -p 3306:3306 --name mysql-employee -e MYSQL_ROOT_PASSWORD=root123 -d mysql
+  626  docker run -p 8081:8081 --name employee-service-app --link mysql-employee:mysql -dti employee-service
+  627  docker logs employee-service-app
+  628  $docker history
