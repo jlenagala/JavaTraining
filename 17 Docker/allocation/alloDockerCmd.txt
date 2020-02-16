@@ -1,0 +1,20 @@
+  516  clear
+  517  vim Dockerfile
+  518  clear
+  519  docker build -t allo-service .
+  520  clear
+  521  docker build -t allo-service
+  522  docker images
+  523  docker run -dti --name localhost-allo -e MYSQL_ROOT_PASSWORD=root123 mysql
+  524  docker run -dti --name allo-service-app -p 8083:8082 --link localhost allo-service
+  525  history > alloDockerCmd.txt
+
+
+DOCKER PORT	ACCESS URL
+8082/tcp	192.168.99.100:8083
+
+how to push images to docker hub
+
+docker login
+docker tag allo-service jlenagala/alloserviceapp-1.0
+docker push jlenagala/alloserviceapp-1.0

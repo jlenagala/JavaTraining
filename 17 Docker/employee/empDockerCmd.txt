@@ -1,0 +1,25 @@
+
+  503  clear
+  504  docker build -t emp-service .
+  505  docker run -dti --name localhost -e MYSQL_ROOT_PASSWORD=root123 mysql
+  506* docker 
+  507  docker ps
+  508  docker run -dti -name emp-service-app -p 8080:8081 --link localhost emp-service
+  509  docker run -dti --name emp-service-app -p 8080:8081 --link localhost emp-service
+  510  history > empDockerCmd.txt
+
+
+
+DOCKER PORT	ACCESS URL
+8081/tcp	192.168.99.100:8080
+
+
+how to push images to docker hub
+
+docker login
+docker tag emp-service jlenagala/empserviceapp-1.0
+docker push jlenagala/empserviceapp-1.0
+
+
+
+
