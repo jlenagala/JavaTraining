@@ -10,6 +10,9 @@ public class ChatClient {
     private static boolean isConnected = false;
 
     public static void main(String[] args) {
+
+
+        
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -19,19 +22,15 @@ public class ChatClient {
                 //connect localhost:1111 as jan
                 String[] input = line.split(" ");
                 String cmd = input[0];
-
                 if (cmd.equals("connect")) {
                     serverUrl = input[1];
                     name = input[3];
                     sendConnect();
-                }
-                if (cmd.equals("list") && isConnected) {
+                }else if (cmd.equals("list") && isConnected) {
                     sendList();
-                } else if (cmd.matches("send ") && isConnected) {
-                    String[] msg = line.split(" ", 3);
-                    sendMessage(msg[2], msg[1]);
+                } else if (cmd.equals("send") && isConnected) {
+                    sendMessage(input[2], input[1]);
                 } else if (cmd.equals("exit") && isConnected) {
-                    if (isConnected)
                         sendLogoff();
                     break;
                 }
@@ -80,7 +79,7 @@ public class ChatClient {
         bufferedWriter.close();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
         String s = bufferedReader.readLine();
-        if (s.isEmpty())
+        if (s==null || s.isEmpty())
             System.out.println("No Users");
         else
             System.out.print(s.replaceAll(" ", System.lineSeparator()));
@@ -103,8 +102,10 @@ public class ChatClient {
             bufferedWriter.close();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String s = bufferedReader.readLine();
-            if ("no".equals(s)) {
+            if ("null".equals(s)) {
                 System.out.println("No such user");
+            }else{
+                System.out.println("sent");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -141,6 +142,7 @@ public class ChatClient {
         public void run() {
             while (isConnected) {
                 try {
+                    Thread.sleep(1000);
                     URL url = new URL("http://" + serverUrl + "/receive");
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("POST");
@@ -150,11 +152,13 @@ public class ChatClient {
                     bufferedWriter.close();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     String s = bufferedReader.readLine();
-                    if (!s.equals("no message")) {
 
+                    if (!s.equals("no message")) {
+                        System.out.println(s);
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

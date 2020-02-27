@@ -14,14 +14,14 @@ public class ChatServer {
 
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(1111), 0);
-        HttpContext context = server.createContext("/");
+//        HttpContext context = server.createContext("/");
         HttpContext contextConnect = server.createContext("/connect");
         HttpContext contextList = server.createContext("/list");
         HttpContext contextLogoff = server.createContext("/logoff");
         HttpContext contextSend = server.createContext("/send");
-        HttpContext contextRecieve = server.createContext("/recieve");
+        HttpContext contextRecieve = server.createContext("/receive");
 
-        context.setHandler(ChatServer::handleRequest);
+//        context.setHandler(ChatServer::handleRequest);
         contextConnect.setHandler(ChatServer::handleConnect);
         contextList.setHandler(ChatServer::handleList);
         contextLogoff.setHandler(ChatServer::handleLogoff);
@@ -59,25 +59,31 @@ public class ChatServer {
 
         String name = bufferedReader.readLine();
         bufferedReader.close();
-        StringBuffer stringBuffer = new StringBuffer();
+
+        ArrayList<String> strings = users.get(name);
 
         String ss = "";
-        for (String s : users.keySet()) {
-            System.out.println(s);
-            if (!name.equals(s)) {
-                ss += s + " ";
+        if(strings ==null || strings.isEmpty()){
+            ss = "no message";
+        }else{
+            for (String s : strings) {
+                ss +=  strings+ " ";
             }
-            String response = ss;
-
-            System.out.println(response);
-            httpExchange.sendResponseHeaders(200, response.length());
-            bufferedWriter.write(response);
-            bufferedWriter.close();
+            System.out.println(strings.size()+name);
         }
+
+
+
+        users.put(name,null);
+
+        httpExchange.sendResponseHeaders(200, ss.length());
+        bufferedWriter.write(ss);
+        bufferedWriter.close();
+        httpExchange.close();
     }
 
     private static void handleSend(HttpExchange httpExchange) {
-
+        System.out.println("hi");
         InputStream requestBody = httpExchange.getRequestBody();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(requestBody));
         OutputStream responseBody = httpExchange.getResponseBody();
@@ -88,6 +94,7 @@ public class ChatServer {
             String message = bufferedReader.readLine();
             bufferedReader.close();
             String response = "";
+            System.out.println(to+to.length());
             if (users.containsKey(to)) {
                 ArrayList<String> stringArrayList = users.get(to);
                 if (stringArrayList == null) {
@@ -95,8 +102,10 @@ public class ChatServer {
                     users.put(to, stringArrayList);
                 }
                 stringArrayList.add(name + " " + message);
+                System.out.println(to);
+                System.out.println(name+ " "+message);
             } else {
-                response = "no";
+                response = "null";
             }
             httpExchange.sendResponseHeaders(200, response.length());
             bufferedWriter.write(response);
@@ -148,20 +157,21 @@ public class ChatServer {
             if (!name.equals(s)) {
                 ss += s + " ";
             }
-            String response = ss;
-            httpExchange.sendResponseHeaders(200, response.length());
-            bufferedWriter.write(response);
-            bufferedWriter.close();
 
-            httpExchange.close();
+
         }
+        httpExchange.sendResponseHeaders(200, ss.length());
+        bufferedWriter.write(ss);
+        bufferedWriter.close();
+
+        httpExchange.close();
     }
 
-    private static void handleRequest(HttpExchange httpExchange) throws IOException {
-        String response = "Hi there!";
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream outputStream = httpExchange.getResponseBody();
-        outputStream.write(response.getBytes());
-        outputStream.close();
-    }
+//    private static void handleRequest(HttpExchange httpExchange) throws IOException {
+//        String response = "Hi there!";
+//        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+//        OutputStream outputStream = httpExchange.getResponseBody();
+//        outputStream.write(response.getBytes());
+//        outputStream.close();
+//    }
 }
