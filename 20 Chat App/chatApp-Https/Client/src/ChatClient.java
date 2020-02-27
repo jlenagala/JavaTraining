@@ -1,3 +1,5 @@
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -10,28 +12,27 @@ public class ChatClient {
     private static boolean isConnected = false;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
+        Scanner scanner = new Scanner(System.in);
+        HttpsURLConnection.setDefaultHostnameVerifier((String hostname, SSLSession sslSession) -> hostname.equals("localhost"));
+
+        System.setProperty("javax.net.ssl.trustStore", "/home/user/Downloads/JavaTraining - SpringBoot/chatApp26/ChatApp-Https/SSL/CA/ClientKeyStore.jks");
+        System.setProperty("javax.net.ssl.trustStorePassword", "123456");
         while (true) {
             try {
                 Thread.sleep(1000);
                 String line = scanner.nextLine();
-                //connect localhost:1111 as jan
                 String[] input = line.split(" ");
                 String cmd = input[0];
-
                 if (cmd.equals("connect")) {
                     serverUrl = input[1];
                     name = input[3];
                     sendConnect();
-                }
-                if (cmd.equals("list") && isConnected) {
+                }else if (cmd.equals("list") && isConnected) {
                     sendList();
-                } else if (cmd.matches("send ") && isConnected) {
-                    String[] msg = line.split(" ", 3);
-                    sendMessage(msg[2], msg[1]);
+                } else if (cmd.equals("send") && isConnected) {
+                    sendMessage(input[2], input[1]);
                 } else if (cmd.equals("exit") && isConnected) {
-                    if (isConnected)
                         sendLogoff();
                     break;
                 }
@@ -45,7 +46,7 @@ public class ChatClient {
 
     private static void sendConnect() throws IOException {
         if (!isConnected) {
-            URL url = new URL("http://" + serverUrl + "/connect");
+            URL url = new URL("https://" + serverUrl + "/connect");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setRequestMethod("POST");
@@ -71,7 +72,7 @@ public class ChatClient {
 
     private static void sendList() throws IOException {
 
-        URL url = new URL("http://" + serverUrl + "/list");
+        URL url = new URL("https://" + serverUrl + "/list");
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("POST");
         urlConnection.setDoOutput(true);
@@ -80,7 +81,7 @@ public class ChatClient {
         bufferedWriter.close();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
         String s = bufferedReader.readLine();
-        if (s.isEmpty())
+        if (s==null || s.isEmpty())
             System.out.println("No Users");
         else
             System.out.print(s.replaceAll(" ", System.lineSeparator()));
@@ -90,7 +91,7 @@ public class ChatClient {
     private static void sendMessage(String message, String toUser) {
 
         try {
-            URL url = new URL("http://" + serverUrl + "/send");
+            URL url = new URL("https://" + serverUrl + "/send");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
@@ -103,8 +104,10 @@ public class ChatClient {
             bufferedWriter.close();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String s = bufferedReader.readLine();
-            if ("no".equals(s)) {
+            if ("null".equals(s)) {
                 System.out.println("No such user");
+            }else{
+                System.out.println("sent");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -115,7 +118,7 @@ public class ChatClient {
 
     private static void sendLogoff() {
         try {
-            URL url = new URL("http://" + serverUrl + "/logoff");
+            URL url = new URL("https://" + serverUrl + "/logoff");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
@@ -141,7 +144,8 @@ public class ChatClient {
         public void run() {
             while (isConnected) {
                 try {
-                    URL url = new URL("http://" + serverUrl + "/receive");
+                    Thread.sleep(1000);
+                    URL url = new URL("https://" + serverUrl + "/receive");
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setDoOutput(true);
@@ -150,11 +154,13 @@ public class ChatClient {
                     bufferedWriter.close();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                     String s = bufferedReader.readLine();
-                    if (!s.equals("no message")) {
 
+                    if (!s.equals("no message")) {
+                        System.out.println(s);
                     }
 
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
