@@ -1,0 +1,7 @@
+server:
+    port:  8191
+#my configuration store localy
+spring:
+  profiles:
+    active: native
+
