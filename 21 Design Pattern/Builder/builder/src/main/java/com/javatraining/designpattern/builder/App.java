@@ -8,9 +8,7 @@ public class App
 {
     public static void main( String[] args )
     {
-//    	Phone phone=new PhoneBuilder().setOs("Android").setRam(5).getPhone();
-//        System.out.println(phone);
-    	
+
     	CarTelescopic1 carTelescopic1=new CarTelescopic1("full");
     	System.out.println(carTelescopic1);
     	
