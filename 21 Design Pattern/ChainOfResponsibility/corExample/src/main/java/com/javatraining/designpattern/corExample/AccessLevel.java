@@ -10,6 +10,8 @@ public abstract class AccessLevel {
 
 	abstract protected String getRole();
 
+	abstract protected void processRequest(AccessRequest accessRequest);
+
 	public void setAccessLevel(AccessLevel accessLevel) {
 		this.accessLevel = accessLevel;
 	}
@@ -18,17 +20,17 @@ public abstract class AccessLevel {
 		return accessLevel;
 	}
 
-	public void processRequest(AccessRequest accessRequest) {
-
-		if (accessRequest.getAmount() < this.getAllowable()) {
-			System.out.println("Approved"+getRole());
-		}
-
-		else if (accessLevel != null) {
-			accessLevel.processRequest(accessRequest);
-
-		}
-
-	}
+//	public void processRequest(AccessRequest accessRequest) {
+//
+//		if (accessRequest.getAmount() < this.getAllowable()) {
+//			System.out.println("Approved"+getRole());
+//		}
+//
+//		else if (accessLevel != null) {
+//			accessLevel.processRequest(accessRequest);
+//
+//		}
+//
+//	}
 
 }

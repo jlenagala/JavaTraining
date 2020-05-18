@@ -14,6 +14,16 @@ public class Director extends AccessLevel {
 		return "Director";
 	}
 	
+	@Override
+	protected void processRequest(AccessRequest accessRequest) {
+		if (accessRequest.getAmount() < this.getAllowable()) {
+		System.out.println("Approved"+getRole());
+	}
 
+	else if (accessLevel != null) {
+		accessLevel.processRequest(accessRequest);
+
+	}
+	}
 
 }

@@ -14,6 +14,10 @@ public class Role extends AccessLevel {
 		return accessLevel.getRole();
 	}
 
-	
- 
+	@Override
+	protected void processRequest(AccessRequest accessRequest) {
+		System.out.println("Approved " + getRole());
+
+	}
+
 }
